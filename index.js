@@ -2,12 +2,11 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const APP_MESSAGE = process.env.APP_MESSAGE || 'Chao mung den voi ung dung Node.js!';
 
 app.get('/', (req, res) => {
-  res.send('Chao mung den voi ung dung Node.js!');
+  res.send(APP_MESSAGE);
 });
-
-app.get('/a', (req, res) => res.json({ message: 'Hello World' }))
 
 app.get('/health', (req, res) => res.json({ ok: true }))
 
