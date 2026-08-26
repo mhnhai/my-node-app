@@ -1,12 +1,15 @@
-// index.js - server Node.js tối giản
-const http = require('http');
+// index.js
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-  res.end('Xin chao tu Git repository dau tien ello, GitHub!\n');
+app.get('/', (req, res) => {
+  res.send('Chao mung den voi ung dung Node.js!');
 });
 
-server.listen(3000, () => {
-  console.log('Server chay tai http://localhost:3000');
+// Route mới, chỉ tồn tại trên branch feature/about
+app.get('/about', (req, res) => {
+  res.send('Day la trang About.');
 });
+
+app.listen(PORT, () => console.log(`Server chay tai http://localhost:${PORT}`));
