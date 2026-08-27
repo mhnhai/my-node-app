@@ -3,6 +3,6 @@ const assert = require('node:assert/strict');
 
 describe('smoke', () => {
   it('1 + 1 equals 2', () => {
-    assert.equal(1 + 1, 3); // cố ý sai để CI fail
+    assert.equal(1 + 1, 2);
   });
 });

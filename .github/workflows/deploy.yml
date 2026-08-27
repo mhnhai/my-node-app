@@ -21,7 +21,9 @@ jobs:
       - name: Run tests
         run: npm test
 
+      # Chỉ deploy khi đã cấu hình secrets trên GitHub
       - name: SSH vào server & chạy deploy.sh
+        if: ${{ secrets.SERVER_HOST != '' && secrets.SERVER_USER != '' && secrets.SSH_PRIVATE_KEY != '' }}
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SERVER_HOST }}
