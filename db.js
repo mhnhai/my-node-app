@@ -17,4 +17,9 @@ const pool = new Pool({
   ssl: isLocal ? false : { rejectUnauthorized: false },
 });
 
-module.exports = pool;
+async function connectDB() {
+  await pool.query('SELECT 1');
+  console.log('Postgres connected');
+}
+
+module.exports = { pool, connectDB };
