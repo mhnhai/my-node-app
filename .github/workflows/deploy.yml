@@ -2,10 +2,10 @@ name: Deploy to Production
 
 on:
   push:
-    branches: [main] # chạy khi có push lên main
+    branches: [main]
 
 jobs:
-  deploy:
+  test-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,10 +15,11 @@ jobs:
           node-version: "22"
           cache: "npm"
 
-      - name: Cài đặt & chạy test
-        run: |
-          npm ci
-          npm test
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
 
       - name: SSH vào server & chạy deploy.sh
         uses: appleboy/ssh-action@v1
