@@ -1,6 +1,8 @@
 // index.js
 const express = require('express');
+const connectDB = require('./db');
 const app = express();
+connectDB(); // kết nối DB trước khi nhận request
 const PORT = process.env.PORT || 3000;
 const APP_MESSAGE = process.env.APP_MESSAGE || 'Chao mung den voi ung dung Node.js!';
 
