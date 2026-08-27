@@ -1,11 +1,11 @@
-name: Deploy to Production
+name: CI
 
 on:
   push:
     branches: [main]
 
 jobs:
-  test-and-deploy:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,14 +21,13 @@ jobs:
       - name: Run tests
         run: npm test
 
-      # Chỉ deploy khi đã cấu hình secrets trên GitHub
-      - name: SSH vào server & chạy deploy.sh
-        if: ${{ secrets.SERVER_HOST != '' && secrets.SERVER_USER != '' && secrets.SSH_PRIVATE_KEY != '' }}
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /var/www/my-app
-            ./deploy.sh
+      # Bat lai khi da co SERVER_HOST, SERVER_USER, SSH_PRIVATE_KEY trong repo Secrets
+      # - name: Deploy over SSH
+      #   uses: appleboy/ssh-action@v1
+      #   with:
+      #     host: ${{ secrets.SERVER_HOST }}
+      #     username: ${{ secrets.SERVER_USER }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     script: |
+      #       cd /var/www/my-app
+      #       ./deploy.sh
