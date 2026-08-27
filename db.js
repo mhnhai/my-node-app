@@ -1,15 +1,20 @@
-// db.js (bản MongoDB)
+// db.js
 require('dotenv').config();
-const mongoose = require('mongoose');
+const { Pool } = require('pg');
 
-async function connectDB() {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('✅ Kết nối MongoDB Atlas thành công!');
-  } catch (err) {
-    console.error('❌ Không kết nối được MongoDB:', err.message);
-    process.exit(1); // dừng app nếu DB hỏng - tránh chạy nửa vời
-  }
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) {
+  throw new Error('Missing DATABASE_URL in .env');
 }
 
-module.exports = connectDB;
+const isLocal =
+  connectionString.includes('localhost') ||
+  connectionString.includes('127.0.0.1');
+
+const pool = new Pool({
+  connectionString,
+  // Neon/cloud cần SSL; Postgres local thường không hỗ trợ
+  ssl: isLocal ? false : { rejectUnauthorized: false },
+});
+
+module.exports = pool;

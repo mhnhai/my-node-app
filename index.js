@@ -17,4 +17,13 @@ app.get('/about', (req, res) => {
   res.send('Day la trang About.');
 });
 
+app.get('/db-test', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT NOW()');
+    res.json({ ok: true, db: result.rows[0].now });
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
 app.listen(PORT, () => console.log(`Server chay tai http://localhost:${PORT}`));
